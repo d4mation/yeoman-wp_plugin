@@ -131,12 +131,12 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 			$mofile_global  = WP_LANG_DIR . '/' . <%= pkgName %>_ID . '/' . $mofile;
 
 			if ( file_exists( $mofile_global ) ) {
-				// Look in global /wp-content/languages/edd-slack/ folder
+				// Look in global /wp-content/languages/<%= textDomain %>/ folder
 				// This way translations can be overridden via the Theme/Child Theme
 				load_textdomain( <%= pkgName %>_ID, $mofile_global );
 			}
 			else if ( file_exists( $mofile_local ) ) {
-				// Look in local /wp-content/plugins/edd-slack/languages/ folder
+				// Look in local /wp-content/plugins/<%= textDomain %>/languages/ folder
 				load_textdomain( <%= pkgName %>_ID, $mofile_local );
 			}
 			else {
