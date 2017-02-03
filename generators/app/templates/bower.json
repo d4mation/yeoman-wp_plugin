@@ -1,0 +1,14 @@
+{
+	"name": "<% pkgName -%>",
+	"version": "0.1.0",
+	"dependencies": {
+	},
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"private": true
+}
