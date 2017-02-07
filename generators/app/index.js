@@ -78,16 +78,16 @@ module.exports = class extends Generator {
 			this.props.pkgName = this.props.pkgName.replace( ' ', '_' );
 			
 			// Used for the Text Domain and File Names
-			this.props.textDomain = this.props.pkgName.toLowerCase().replace( '_', '-' ).replace( ' ', '-' ).trim();
+			this.props.textDomain = this.props.pkgName.toLowerCase().replace( /_/g, '-' ).replace( /\s/g, '-' ).trim();
 			
 			// Used for Filter Names/Function Prefixes
 			this.props.pkgNameLowerCase = this.props.pkgName.toLowerCase().trim();
 			
 			// The name of the function which calls the Instance
-			this.props.instanceName = this.props.pkgName.replace( /[\W|_]/, '' ).toUpperCase();
+			this.props.instanceName = this.props.pkgName.replace( /[\W|_]/g, '' ).toUpperCase();
 			
 			// The JavaScript Object used in Localized Scripts
-			this.props.javaScriptObject = this.props.pkgName.charAt( 0 ).toLowerCase() + this.props.pkgName.slice( 1 ).replace( /[\W|_]/, '' );
+			this.props.javaScriptObject = this.props.pkgName.charAt( 0 ).toLowerCase() + this.props.pkgName.slice( 1 ).replace( /[\W|_]/g, '' );
 			
 			if ( this.props.pluginURL == '' && 
 			   this.props.gitHubURL !== '' ) {
