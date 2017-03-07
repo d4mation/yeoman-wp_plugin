@@ -81,11 +81,6 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 			
 			// Only call this once, accessible always
 			$this->plugin_data = get_plugin_data( __FILE__ );
-			
-			if ( ! defined( '<%= pkgName %>_ID' ) ) {
-				// Plugin Text Domain
-				define( '<%= pkgName %>_ID', $this->plugin_data['TextDomain'] );
-			}
 
 			if ( ! defined( '<%= pkgName %>_VER' ) ) {
 				// Plugin version
@@ -123,25 +118,25 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 			$lang_dir = apply_filters( '<%= pkgNameLowerCase %>_languages_directory', $lang_dir );
 
 			// Traditional WordPress plugin locale filter
-			$locale = apply_filters( 'plugin_locale', get_locale(), <%= pkgName %>_ID );
-			$mofile = sprintf( '%1$s-%2$s.mo', <%= pkgName %>_ID, $locale );
+			$locale = apply_filters( 'plugin_locale', get_locale(), '<%= textDomain -%>' );
+			$mofile = sprintf( '%1$s-%2$s.mo', '<%= textDomain -%>', $locale );
 
 			// Setup paths to current locale file
 			$mofile_local   = $lang_dir . $mofile;
-			$mofile_global  = WP_LANG_DIR . '/' . <%= pkgName %>_ID . '/' . $mofile;
+			$mofile_global  = WP_LANG_DIR . '/<%= textDomain -%>/' . $mofile;
 
 			if ( file_exists( $mofile_global ) ) {
 				// Look in global /wp-content/languages/<%= textDomain %>/ folder
 				// This way translations can be overridden via the Theme/Child Theme
-				load_textdomain( <%= pkgName %>_ID, $mofile_global );
+				load_textdomain( '<%= textDomain -%>', $mofile_global );
 			}
 			else if ( file_exists( $mofile_local ) ) {
 				// Look in local /wp-content/plugins/<%= textDomain %>/languages/ folder
-				load_textdomain( <%= pkgName %>_ID, $mofile_local );
+				load_textdomain( '<%= textDomain -%>', $mofile_local );
 			}
 			else {
 				// Load the default language files
-				load_plugin_textdomain( <%= pkgName %>_ID, false, $lang_dir );
+				load_plugin_textdomain( '<%= textDomain -%>', false, $lang_dir );
 			}
 
 		}
@@ -186,14 +181,14 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 		public function register_scripts() {
 			
 			wp_register_style(
-				<%= pkgName %>_ID . '-admin',
+				'<%= textDomain -%>-admin',
 				<%= pkgName %>_URL . 'assets/css/admin.css',
 				null,
 				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%= pkgName %>_VER
 			);
 			
 			wp_register_script(
-				<%= pkgName %>_ID . '-admin',
+				'<%= textDomain -%>-admin',
 				<%= pkgName %>_URL . 'assets/js/admin.js',
 				array( 'jquery' ),
 				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%= pkgName %>_VER,
@@ -201,7 +196,7 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 			);
 			
 			wp_localize_script( 
-				<%= pkgName %>_ID . '-admin',
+				'<%= textDomain -%>-admin',
 				'<%= javaScriptObject %>',
 				apply_filters( '<%= pkgNameLowerCase -%>_localize_admin_script', array() )
 			);
