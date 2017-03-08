@@ -1,14 +1,14 @@
 <?php
-/*
-Plugin Name: <%- pluginName %>
-<% if (pluginURI !== '') { %>Plugin URI: <%- pluginURI _%><%= "\n" %><% } -%>
-Description: <%- pluginDescription %>
-Version: 0.1.0
-Text Domain: <%- textDomain %>
-<% if (author !== '') { %>Author: <%- author _%><%= "\n" %><% } -%>
-<% if (authorURI !== '') { %>Author URI: <%- authorURI _%><%= "\n" %><% } -%>
-<% if (contributors !== '') { %>Contributors: <%- contributors _%><%= "\n" %><% } -%>
-*/
+/**
+ * Plugin Name: <%- pluginName %>
+<% if (pluginURI !== '') { %> * Plugin URI: <%- pluginURI _%><%= "\n" %><% } -%>
+ * Description: <%- pluginDescription %>
+ * Version: 0.1.0
+ * Text Domain: <%- textDomain %>
+<% if (author !== '') { %> * Author: <%- author _%><%= "\n" %><% } -%>
+<% if (authorURI !== '') { %> * Author URI: <%- authorURI _%><%= "\n" %><% } -%>
+<% if (contributors !== '') { %> * Contributors: <%- contributors _%><%= "\n" %><% } -%>
+ */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
