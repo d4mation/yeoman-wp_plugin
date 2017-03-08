@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: <%- pluginName %>
-<% if (pluginURL !== '') { %>Plugin URL: <%- pluginURL _%><%= "\n" %><% } -%>
+<% if (pluginURI !== '') { %>Plugin URI: <%- pluginURI _%><%= "\n" %><% } -%>
 Description: <%- pluginDescription %>
 Version: 0.1.0
 Text Domain: <%- textDomain %>
 <% if (author !== '') { %>Author: <%- author _%><%= "\n" %><% } -%>
-<% if (authorURI !== '') { %>Author URL: <%- authorURI _%><%= "\n" %><% } -%>
+<% if (authorURI !== '') { %>Author URI: <%- authorURI _%><%= "\n" %><% } -%>
 <% if (contributors !== '') { %>Contributors: <%- contributors _%><%= "\n" %><% } -%>
 */
 
@@ -191,6 +191,27 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 		 * @return	  void
 		 */
 		public function register_scripts() {
+			
+			wp_register_style(
+				'<%- textDomain -%>',
+				<%- pkgName -%>_URL . 'assets/css/style.css',
+				null,
+				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER
+			);
+			
+			wp_register_script(
+				'<%- textDomain -%>',
+				<%- pkgName -%>_URL . 'assets/js/script.js',
+				array( 'jquery' ),
+				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER,
+				true
+			);
+			
+			wp_localize_script( 
+				'<%- textDomain -%>',
+				'<%- javaScriptObject -%>',
+				apply_filters( '<%- pkgNameLowerCase -%>_localize_script', array() )
+			);
 			
 			wp_register_style(
 				'<%- textDomain -%>-admin',
