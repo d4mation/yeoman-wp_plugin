@@ -193,6 +193,27 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 		public function register_scripts() {
 			
 			wp_register_style(
+				'<%- textDomain -%>',
+				<%- pkgName -%>_URL . 'assets/css/style.css',
+				null,
+				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER
+			);
+			
+			wp_register_script(
+				'<%- textDomain -%>',
+				<%- pkgName -%>_URL . 'assets/js/script.js',
+				array( 'jquery' ),
+				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER,
+				true
+			);
+			
+			wp_localize_script( 
+				'<%- textDomain -%>',
+				'<%- javaScriptObject -%>',
+				apply_filters( '<%- pkgNameLowerCase -%>_localize_script', array() )
+			);
+			
+			wp_register_style(
 				'<%- textDomain -%>-admin',
 				<%- pkgName -%>_URL . 'assets/css/admin.css',
 				null,
