@@ -8,7 +8,7 @@ var fs			= require( 'fs' );
 var pkg			= JSON.parse( fs.readFileSync( './package.json' ) );
 var onError		= notify.onError( {
    title:	pkg.name,
-   message:  '<%= error.name -%> <%= error.message -%>'   
+   message:  '<%- error.name -%> <%- error.message -%>'   
 } );
 
 // This needs defined here too to prevent errors on default task
