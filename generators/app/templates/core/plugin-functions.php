@@ -5,7 +5,7 @@
  * @since	  1.0.0
  *
  * @package	<%- pkgName %>
- * @subpackage <%- pkgName %>/core
+ * @subpackage <%- pkgName -%>/core
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -18,6 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return		<%- pkgName %>
  */
-function <%- instanceName %>() {
-	return <%- pkgName %>::instance();
+function <%- instanceName -%>() {
+	return <%- pkgName -%>::instance();
 }
