@@ -37,8 +37,8 @@ module.exports = class extends Generator {
 			},
 			{
 				type: 'input',
-				name: 'pluginURL',
-				message: 'Plugin URL? (Optional)',
+				name: 'pluginURI',
+				message: 'Plugin URI? (Optional)',
 				default: '',
 			},
 			{
@@ -95,9 +95,9 @@ module.exports = class extends Generator {
 			// The JavaScript Object used in Localized Scripts
 			this.props.javaScriptObject = this.props.pkgName.charAt( 0 ).toLowerCase() + this.props.pkgName.slice( 1 ).replace( /[\W|_]/g, '' );
 
-			if ( this.props.pluginURL == '' && 
+			if ( this.props.pluginURI == '' && 
 				this.props.gitHubURL !== '' ) {
-				this.props.pluginURL = this.props.gitHubURL; // Allow Plugin URL to fallback to GitHub URL
+				this.props.pluginURI = this.props.gitHubURL; // Allow Plugin URL to fallback to GitHub URL
 			}
 
 		} );
@@ -140,7 +140,7 @@ module.exports = class extends Generator {
 				pkgName: this.props.pkgName,
 				pluginName: this.props.pluginName,
 				pluginDescription: this.props.pluginDescription,
-				pluginURL: this.props.pluginURL,
+				pluginURI: this.props.pluginURI,
 				textDomain: this.props.textDomain,
 				author: this.props.author,
 				authorURI: this.props.authorURI,
