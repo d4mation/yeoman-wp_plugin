@@ -4,7 +4,7 @@ var gulp		= require( 'gulp' );
 var notify		= require( 'gulp-notify' );
 var fs			= require( 'fs' );
 var pkg			= JSON.parse( fs.readFileSync( './package.json' ) );
-var packageName	= pkg.name.toLowerCase().replace( /_/g, '-' );
+var packageName	= pkg.name.toLowerCase().replace( /_/g, '-' ).replace( /\s/g, '-' ).trim();
 
 require( 'gulp-grunt' )( gulp, {
 	prefix: 'release:grunt-',
@@ -18,7 +18,7 @@ gulp.task( 'release:localization', function( done ) {
 	return gulp.src( './**/*.php' )
 		.pipe( $.sort() )
 		.pipe( $.wpPot( {
-			domain: pkg.name + '_ID',
+			domain: packageName,
 			destFile: packageName + '.pot',
 			package: pkg.name,
 		} ) )

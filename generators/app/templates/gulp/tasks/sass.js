@@ -22,7 +22,7 @@ gulp.task( 'sass:front', function() {
 			} )
 			.on( 'error', notify.onError( {
 				title: pkg.name,
-				message: "<%= error.message -%>",
+				message: "<%- error.message -%>",
 			} )
 		 ) )
 		.pipe( concat( config.front.filename ) )
@@ -48,7 +48,7 @@ gulp.task( 'sass:admin', function() {
 			} )
 			.on( 'error', notify.onError( {
 				title: pkg.name,
-				message: "<%= error.message -%>",
+				message: "<%- error.message -%>",
 			} )
 		 ) )
 		.pipe( concat( config.admin.filename ) )

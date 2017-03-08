@@ -1,35 +1,35 @@
 <?php
 /*
-Plugin Name: <%= pluginName %>
-<% if (pluginURL !== '') { %>Plugin URL: <%= pluginURL _%><%= "\n" %><% } -%>
-Description: <%= pluginDescription %>
+Plugin Name: <%- pluginName %>
+<% if (pluginURL !== '') { %>Plugin URL: <%- pluginURL _%><%= "\n" %><% } -%>
+Description: <%- pluginDescription %>
 Version: 0.1.0
-Text Domain: <%= textDomain %>
-<% if (author !== '') { %>Author: <%= author _%><%= "\n" %><% } -%>
-<% if (authorURI !== '') { %>Author URL: <%= authorURI _%><%= "\n" %><% } -%>
-<% if (contributors !== '') { %>Contributors: <%= contributors _%><%= "\n" %><% } -%>
+Text Domain: <%- textDomain %>
+<% if (author !== '') { %>Author: <%- author _%><%= "\n" %><% } -%>
+<% if (authorURI !== '') { %>Author URL: <%- authorURI _%><%= "\n" %><% } -%>
+<% if (contributors !== '') { %>Contributors: <%- contributors _%><%= "\n" %><% } -%>
 */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( '<%= pkgName %>' ) ) {
+if ( ! class_exists( '<%- pkgName -%>' ) ) {
 
 	/**
-	 * Main <%= pkgName %> class
+	 * Main <%- pkgName -%> class
 	 *
 	 * @since	  1.0.0
 	 */
-	class <%= pkgName %> {
+	class <%- pkgName -%> {
 		
 		/**
-		 * @var			<%= pkgName %> $plugin_data Holds Plugin Header Info
+		 * @var			<%- pkgName -%> $plugin_data Holds Plugin Header Info
 		 * @since		1.0.0
 		 */
 		public $plugin_data;
 		
 		/**
-		 * @var			<%= pkgName %> $admin_errors Stores all our Admin Errors to fire at once
+		 * @var			<%- pkgName -%> $admin_errors Stores all our Admin Errors to fire at once
 		 * @since		1.0.0
 		 */
 		private $admin_errors;
@@ -39,7 +39,7 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 		 *
 		 * @access	  public
 		 * @since	  1.0.0
-		 * @return	  object self::$instance The one true <%= pkgName %>
+		 * @return	  object self::$instance The one true <%- pkgName %>
 		 */
 		public static function instance() {
 			
@@ -57,6 +57,18 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 			
 			$this->setup_constants();
 			$this->load_textdomain();
+			
+			if ( version_compare( get_bloginfo( 'version' ), '<%- minimumWP -%>' ) < 0 ) {
+				
+				$this->admin_errors[] = sprintf( _x( '%s requires v%s of %s or higher to be installed!', 'Outdated Dependency Error', '<%- textDomain -%>' ), '<strong>' . $this->plugin_data['Name'] . '</strong>', '<%- minimumWP -%>', '<a href="' . admin_url( 'update-core.php' ) . '"><strong>WordPress</strong></a>' );
+				
+				if ( ! has_action( 'admin_notices', array( $this, 'admin_errors' ) ) ) {
+					add_action( 'admin_notices', array( $this, 'admin_errors' ) );
+				}
+				
+				return false;
+				
+			}
 			
 			$this->require_necessities();
 			
@@ -81,30 +93,25 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 			
 			// Only call this once, accessible always
 			$this->plugin_data = get_plugin_data( __FILE__ );
-			
-			if ( ! defined( '<%= pkgName %>_ID' ) ) {
-				// Plugin Text Domain
-				define( '<%= pkgName %>_ID', $this->plugin_data['TextDomain'] );
-			}
 
-			if ( ! defined( '<%= pkgName %>_VER' ) ) {
+			if ( ! defined( '<%- pkgName -%>_VER' ) ) {
 				// Plugin version
-				define( '<%= pkgName %>_VER', $this->plugin_data['Version'] );
+				define( '<%- pkgName -%>_VER', $this->plugin_data['Version'] );
 			}
 
-			if ( ! defined( '<%= pkgName %>_DIR' ) ) {
+			if ( ! defined( '<%- pkgName -%>_DIR' ) ) {
 				// Plugin path
-				define( '<%= pkgName %>_DIR', plugin_dir_path( __FILE__ ) );
+				define( '<%- pkgName -%>_DIR', plugin_dir_path( __FILE__ ) );
 			}
 
-			if ( ! defined( '<%= pkgName %>_URL' ) ) {
+			if ( ! defined( '<%- pkgName -%>_URL' ) ) {
 				// Plugin URL
-				define( '<%= pkgName %>_URL', plugin_dir_url( __FILE__ ) );
+				define( '<%- pkgName -%>_URL', plugin_dir_url( __FILE__ ) );
 			}
 			
-			if ( ! defined( '<%= pkgName %>_FILE' ) ) {
+			if ( ! defined( '<%- pkgName -%>_FILE' ) ) {
 				// Plugin File
-				define( '<%= pkgName %>_FILE', __FILE__ );
+				define( '<%- pkgName -%>_FILE', __FILE__ );
 			}
 
 		}
@@ -119,29 +126,29 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 		private function load_textdomain() {
 
 			// Set filter for language directory
-			$lang_dir = <%= pkgName %>_DIR . '/languages/';
-			$lang_dir = apply_filters( '<%= pkgNameLowerCase %>_languages_directory', $lang_dir );
+			$lang_dir = <%- pkgName -%>_DIR . '/languages/';
+			$lang_dir = apply_filters( '<%- pkgNameLowerCase -%>_languages_directory', $lang_dir );
 
 			// Traditional WordPress plugin locale filter
-			$locale = apply_filters( 'plugin_locale', get_locale(), <%= pkgName %>_ID );
-			$mofile = sprintf( '%1$s-%2$s.mo', <%= pkgName %>_ID, $locale );
+			$locale = apply_filters( 'plugin_locale', get_locale(), '<%- textDomain -%>' );
+			$mofile = sprintf( '%1$s-%2$s.mo', '<%- textDomain -%>', $locale );
 
 			// Setup paths to current locale file
 			$mofile_local   = $lang_dir . $mofile;
-			$mofile_global  = WP_LANG_DIR . '/' . <%= pkgName %>_ID . '/' . $mofile;
+			$mofile_global  = WP_LANG_DIR . '/<%- textDomain -%>/' . $mofile;
 
 			if ( file_exists( $mofile_global ) ) {
-				// Look in global /wp-content/languages/<%= textDomain %>/ folder
+				// Look in global /wp-content/languages/<%- textDomain -%>/ folder
 				// This way translations can be overridden via the Theme/Child Theme
-				load_textdomain( <%= pkgName %>_ID, $mofile_global );
+				load_textdomain( '<%- textDomain -%>', $mofile_global );
 			}
 			else if ( file_exists( $mofile_local ) ) {
-				// Look in local /wp-content/plugins/<%= textDomain %>/languages/ folder
-				load_textdomain( <%= pkgName %>_ID, $mofile_local );
+				// Look in local /wp-content/plugins/<%- textDomain -%>/languages/ folder
+				load_textdomain( '<%- textDomain -%>', $mofile_local );
 			}
 			else {
 				// Load the default language files
-				load_plugin_textdomain( <%= pkgName %>_ID, false, $lang_dir );
+				load_plugin_textdomain( '<%- textDomain -%>', false, $lang_dir );
 			}
 
 		}
@@ -186,24 +193,24 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 		public function register_scripts() {
 			
 			wp_register_style(
-				<%= pkgName %>_ID . '-admin',
-				<%= pkgName %>_URL . 'assets/css/admin.css',
+				'<%- textDomain -%>-admin',
+				<%- pkgName -%>_URL . 'assets/css/admin.css',
 				null,
-				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%= pkgName %>_VER
+				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER
 			);
 			
 			wp_register_script(
-				<%= pkgName %>_ID . '-admin',
-				<%= pkgName %>_URL . 'assets/js/admin.js',
+				'<%- textDomain -%>-admin',
+				<%- pkgName -%>_URL . 'assets/js/admin.js',
 				array( 'jquery' ),
-				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%= pkgName %>_VER,
+				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER,
 				true
 			);
 			
 			wp_localize_script( 
-				<%= pkgName %>_ID . '-admin',
-				'<%= javaScriptObject %>',
-				apply_filters( '<%= pkgNameLowerCase -%>_localize_admin_script', array() )
+				'<%- textDomain -%>-admin',
+				'<%- javaScriptObject -%>',
+				apply_filters( '<%- pkgNameLowerCase -%>_localize_admin_script', array() )
 			);
 			
 		}
@@ -213,16 +220,16 @@ if ( ! class_exists( '<%= pkgName %>' ) ) {
 } // End Class Exists Check
 
 /**
- * The main function responsible for returning the one true <%= pkgName %>
+ * The main function responsible for returning the one true <%- pkgName %>
  * instance to functions everywhere
  *
  * @since	  1.0.0
- * @return	  \<%= pkgName %> The one true <%= pkgName %>
+ * @return	  \<%- pkgName -%> The one true <%- pkgName %>
  */
-add_action( 'plugins_loaded', '<%= pkgNameLowerCase %>_load' );
-function <%= pkgNameLowerCase %>_load() {
+add_action( 'plugins_loaded', '<%- pkgNameLowerCase -%>_load' );
+function <%- pkgNameLowerCase -%>_load() {
 
-	require_once __DIR__ . '/core/<%= textDomain %>-functions.php';
-	<%= instanceName %>();
+	require_once __DIR__ . '/core/<%- textDomain -%>-functions.php';
+	<%- instanceName -%>();
 
 }

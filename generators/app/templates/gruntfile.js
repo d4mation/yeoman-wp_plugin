@@ -12,10 +12,10 @@ module.exports = function (grunt) {
 		compress: {
 			main: {
 				options: {
-					archive: '<%= textDomain -%>.zip'
+					archive: '<%- textDomain -%>.zip'
 				},
 				files: [
-					{expand: true, dot: true, src: ['./<%= textDomain -%>/**/*.*'], dest: './'}
+					{expand: true, dot: true, src: ['./<%- textDomain -%>/**/*.*'], dest: './'}
 				]
 			}
 		}
