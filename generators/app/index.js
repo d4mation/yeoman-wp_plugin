@@ -61,6 +61,12 @@ module.exports = class extends Generator {
 			},
 			{
 				type: 'input',
+				name: 'minimumWP',
+				message: 'Minimum WordPress version? (Optional)',
+				default: '4.4',
+			},
+			{
+				type: 'input',
 				name: 'gitHubURL',
 				message: 'GitHub URL? (Optional)',
 				default: '',
@@ -139,6 +145,7 @@ module.exports = class extends Generator {
 				author: this.props.author,
 				authorURI: this.props.authorURI,
 				contributors: this.props.contributors,
+				minimumWP: this.props.minimumWP,
 				gitHubURL: this.props.gitHubURL,
 				javaScriptObject: this.props.javaScriptObject,
 				pkgNameLowerCase: this.props.pkgNameLowerCase,

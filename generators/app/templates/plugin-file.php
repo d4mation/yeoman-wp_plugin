@@ -13,23 +13,23 @@ Text Domain: <%- textDomain %>
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( '<%- pkgName %>' ) ) {
+if ( ! class_exists( '<%- pkgName -%>' ) ) {
 
 	/**
-	 * Main <%- pkgName %> class
+	 * Main <%- pkgName -%> class
 	 *
 	 * @since	  1.0.0
 	 */
-	class <%- pkgName %> {
+	class <%- pkgName -%> {
 		
 		/**
-		 * @var			<%- pkgName %> $plugin_data Holds Plugin Header Info
+		 * @var			<%- pkgName -%> $plugin_data Holds Plugin Header Info
 		 * @since		1.0.0
 		 */
 		public $plugin_data;
 		
 		/**
-		 * @var			<%- pkgName %> $admin_errors Stores all our Admin Errors to fire at once
+		 * @var			<%- pkgName -%> $admin_errors Stores all our Admin Errors to fire at once
 		 * @since		1.0.0
 		 */
 		private $admin_errors;
@@ -58,6 +58,18 @@ if ( ! class_exists( '<%- pkgName %>' ) ) {
 			$this->setup_constants();
 			$this->load_textdomain();
 			
+			if ( version_compare( get_bloginfo( 'version' ), '<%- minimumWP -%>' ) < 0 ) {
+				
+				$this->admin_errors[] = sprintf( _x( '%s requires v%s of %s or higher to be installed!', 'Outdated Dependency Error', '<%- textDomain -%>' ), '<strong>' . $this->plugin_data['Name'] . '</strong>', '<%- minimumWP -%>', '<a href="' . admin_url( 'update-core.php' ) . '"><strong>WordPress</strong></a>' );
+				
+				if ( ! has_action( 'admin_notices', array( $this, 'admin_errors' ) ) ) {
+					add_action( 'admin_notices', array( $this, 'admin_errors' ) );
+				}
+				
+				return false;
+				
+			}
+			
 			$this->require_necessities();
 			
 			// Register our CSS/JS for the whole plugin
@@ -82,24 +94,24 @@ if ( ! class_exists( '<%- pkgName %>' ) ) {
 			// Only call this once, accessible always
 			$this->plugin_data = get_plugin_data( __FILE__ );
 
-			if ( ! defined( '<%- pkgName %>_VER' ) ) {
+			if ( ! defined( '<%- pkgName -%>_VER' ) ) {
 				// Plugin version
-				define( '<%- pkgName %>_VER', $this->plugin_data['Version'] );
+				define( '<%- pkgName -%>_VER', $this->plugin_data['Version'] );
 			}
 
-			if ( ! defined( '<%- pkgName %>_DIR' ) ) {
+			if ( ! defined( '<%- pkgName -%>_DIR' ) ) {
 				// Plugin path
-				define( '<%- pkgName %>_DIR', plugin_dir_path( __FILE__ ) );
+				define( '<%- pkgName -%>_DIR', plugin_dir_path( __FILE__ ) );
 			}
 
-			if ( ! defined( '<%- pkgName %>_URL' ) ) {
+			if ( ! defined( '<%- pkgName -%>_URL' ) ) {
 				// Plugin URL
-				define( '<%- pkgName %>_URL', plugin_dir_url( __FILE__ ) );
+				define( '<%- pkgName -%>_URL', plugin_dir_url( __FILE__ ) );
 			}
 			
-			if ( ! defined( '<%- pkgName %>_FILE' ) ) {
+			if ( ! defined( '<%- pkgName -%>_FILE' ) ) {
 				// Plugin File
-				define( '<%- pkgName %>_FILE', __FILE__ );
+				define( '<%- pkgName -%>_FILE', __FILE__ );
 			}
 
 		}
@@ -114,8 +126,8 @@ if ( ! class_exists( '<%- pkgName %>' ) ) {
 		private function load_textdomain() {
 
 			// Set filter for language directory
-			$lang_dir = <%- pkgName %>_DIR . '/languages/';
-			$lang_dir = apply_filters( '<%- pkgNameLowerCase %>_languages_directory', $lang_dir );
+			$lang_dir = <%- pkgName -%>_DIR . '/languages/';
+			$lang_dir = apply_filters( '<%- pkgNameLowerCase -%>_languages_directory', $lang_dir );
 
 			// Traditional WordPress plugin locale filter
 			$locale = apply_filters( 'plugin_locale', get_locale(), '<%- textDomain -%>' );
@@ -126,12 +138,12 @@ if ( ! class_exists( '<%- pkgName %>' ) ) {
 			$mofile_global  = WP_LANG_DIR . '/<%- textDomain -%>/' . $mofile;
 
 			if ( file_exists( $mofile_global ) ) {
-				// Look in global /wp-content/languages/<%- textDomain %>/ folder
+				// Look in global /wp-content/languages/<%- textDomain -%>/ folder
 				// This way translations can be overridden via the Theme/Child Theme
 				load_textdomain( '<%- textDomain -%>', $mofile_global );
 			}
 			else if ( file_exists( $mofile_local ) ) {
-				// Look in local /wp-content/plugins/<%- textDomain %>/languages/ folder
+				// Look in local /wp-content/plugins/<%- textDomain -%>/languages/ folder
 				load_textdomain( '<%- textDomain -%>', $mofile_local );
 			}
 			else {
@@ -182,22 +194,22 @@ if ( ! class_exists( '<%- pkgName %>' ) ) {
 			
 			wp_register_style(
 				'<%- textDomain -%>-admin',
-				<%- pkgName %>_URL . 'assets/css/admin.css',
+				<%- pkgName -%>_URL . 'assets/css/admin.css',
 				null,
-				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName %>_VER
+				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER
 			);
 			
 			wp_register_script(
 				'<%- textDomain -%>-admin',
-				<%- pkgName %>_URL . 'assets/js/admin.js',
+				<%- pkgName -%>_URL . 'assets/js/admin.js',
 				array( 'jquery' ),
-				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName %>_VER,
+				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER,
 				true
 			);
 			
 			wp_localize_script( 
 				'<%- textDomain -%>-admin',
-				'<%- javaScriptObject %>',
+				'<%- javaScriptObject -%>',
 				apply_filters( '<%- pkgNameLowerCase -%>_localize_admin_script', array() )
 			);
 			
@@ -212,12 +224,12 @@ if ( ! class_exists( '<%- pkgName %>' ) ) {
  * instance to functions everywhere
  *
  * @since	  1.0.0
- * @return	  \<%- pkgName %> The one true <%- pkgName %>
+ * @return	  \<%- pkgName -%> The one true <%- pkgName %>
  */
-add_action( 'plugins_loaded', '<%- pkgNameLowerCase %>_load' );
-function <%- pkgNameLowerCase %>_load() {
+add_action( 'plugins_loaded', '<%- pkgNameLowerCase -%>_load' );
+function <%- pkgNameLowerCase -%>_load() {
 
-	require_once __DIR__ . '/core/<%- textDomain %>-functions.php';
-	<%- instanceName %>();
+	require_once __DIR__ . '/core/<%- textDomain -%>-functions.php';
+	<%- instanceName -%>();
 
 }
