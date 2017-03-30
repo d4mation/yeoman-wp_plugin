@@ -45,8 +45,8 @@ gulp.task( 'release:rename', function( done ) {
 	}
 	
 	var mainFile = fs.readFileSync( sourceFile, 'utf8' ),
-		versionLine = mainFile.match( /^version:(?:\s)+(?:\S)+/im ),
-		version = versionLine[0].replace( /version:(?:\s)+/i, '' );
+		versionLine = mainFile.match( /^\s\*\sversion:(?:\s)+(?:\S)+/im ),
+		version = versionLine[0].replace( /\s\*\sversion:(?:\s)+/i, '' );
 	
 	fs.renameSync( './' + packageName + '.zip', './' + packageName + '-' + version + '.zip' );
 	
