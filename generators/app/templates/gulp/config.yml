@@ -75,6 +75,7 @@ release:
     - "!./**/gruntfile.js"
     - "!./**/gulp/**/*.*"
     - "!./**/package.json"
+    - "!./**/package.json"
     - "!./**/bower.json"
     - "!./**/composer.json"
     - "!./**/node_modules/**/*.*"
