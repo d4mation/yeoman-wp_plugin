@@ -112,17 +112,17 @@ module.exports = class extends Generator {
 
 			}
 		);
-
+		
 		this.fs.copy(
-			this.templatePath( './gulpfile.js' ),
-			this.destinationPath( './gulpfile.js' ), {
+			this.templatePath( './.babelrc' ),
+			this.destinationPath( './.babelrc' ), {
 
 			}
 		);
 
 		this.fs.copy(
-			this.templatePath( './gulp/**/*.*' ),
-			this.destinationPath( './gulp/' ), {
+			this.templatePath( './gulpfile.babel.js' ),
+			this.destinationPath( './gulpfile.babel.js' ), {
 
 			}
 		);
@@ -168,13 +168,6 @@ module.exports = class extends Generator {
 			}
 		);
 
-		this.fs.copyTpl(
-			this.templatePath( './bower.json' ),
-			this.destinationPath( './bower.json' ), {
-				pkgName: this.props.pkgName,
-			}
-		);
-
 		// If gitHubURL is provided, add to our JSON files, re-run EJS, and overwrite the file in the queue
 		if ( this.props.gitHubURL !== '' ) {
 
@@ -190,7 +183,7 @@ module.exports = class extends Generator {
 					}
 				},
 				null,
-				'\t'
+				'  '
 			);
 
 			var packageJson = ejs.render(
@@ -217,23 +210,8 @@ module.exports = class extends Generator {
 					}
 				},
 				null,
-				'\t'
+				'  '
 			);
-
-			var bowerJson = ejs.render(
-				this.fs.read( this.destinationPath( './bower.json' ) ),
-				{
-					gitHubURL: this.props.gitHubURL,
-				},
-				extend( 
-					{
-						filename: this.destinationPath( './bower.json' ),
-					},
-					{}
-				)
-			);
-
-			this.fs.write( this.destinationPath( './bower.json' ), bowerJson );
 
 		}
 

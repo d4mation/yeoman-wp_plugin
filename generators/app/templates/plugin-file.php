@@ -18,19 +18,19 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 	/**
 	 * Main <%- pkgName -%> class
 	 *
-	 * @since	  1.0.0
+	 * @since	  {{VERSION}}
 	 */
-	class <%- pkgName -%> {
+	final class <%- pkgName -%> {
 		
 		/**
-		 * @var			<%- pkgName -%> $plugin_data Holds Plugin Header Info
-		 * @since		1.0.0
+		 * @var			array $plugin_data Holds Plugin Header Info
+		 * @since		{{VERSION}}
 		 */
 		public $plugin_data;
 		
 		/**
-		 * @var			<%- pkgName -%> $admin_errors Stores all our Admin Errors to fire at once
-		 * @since		1.0.0
+		 * @var			array $admin_errors Stores all our Admin Errors to fire at once
+		 * @since		{{VERSION}}
 		 */
 		private $admin_errors;
 
@@ -38,7 +38,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 		 * Get active instance
 		 *
 		 * @access	  public
-		 * @since	  1.0.0
+		 * @since	  {{VERSION}}
 		 * @return	  object self::$instance The one true <%- pkgName %>
 		 */
 		public static function instance() {
@@ -81,7 +81,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 		 * Setup plugin constants
 		 *
 		 * @access	  private
-		 * @since	  1.0.0
+		 * @since	  {{VERSION}}
 		 * @return	  void
 		 */
 		private function setup_constants() {
@@ -120,7 +120,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 		 * Internationalization
 		 *
 		 * @access	  private 
-		 * @since	  1.0.0
+		 * @since	  {{VERSION}}
 		 * @return	  void
 		 */
 		private function load_textdomain() {
@@ -157,7 +157,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 		 * Include different aspects of the Plugin
 		 * 
 		 * @access	  private
-		 * @since	  1.0.0
+		 * @since	  {{VERSION}}
 		 * @return	  void
 		 */
 		private function require_necessities() {
@@ -168,7 +168,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 		 * Show admin errors.
 		 * 
 		 * @access	  public
-		 * @since	  1.0.0
+		 * @since	  {{VERSION}}
 		 * @return	  HTML
 		 */
 		public function admin_errors() {
@@ -187,21 +187,21 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 		 * Register our CSS/JS to use later
 		 * 
 		 * @access	  public
-		 * @since	  1.0.0
+		 * @since	  {{VERSION}}
 		 * @return	  void
 		 */
 		public function register_scripts() {
 			
 			wp_register_style(
 				'<%- textDomain -%>',
-				<%- pkgName -%>_URL . 'assets/css/style.css',
+				<%- pkgName -%>_URL . 'dist/assets/css/app.css',
 				null,
 				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER
 			);
 			
 			wp_register_script(
 				'<%- textDomain -%>',
-				<%- pkgName -%>_URL . 'assets/js/script.js',
+				<%- pkgName -%>_URL . 'dist/assets/js/app.js',
 				array( 'jquery' ),
 				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER,
 				true
@@ -215,14 +215,14 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 			
 			wp_register_style(
 				'<%- textDomain -%>-admin',
-				<%- pkgName -%>_URL . 'assets/css/admin.css',
+				<%- pkgName -%>_URL . 'dist/assets/css/admin.css',
 				null,
 				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER
 			);
 			
 			wp_register_script(
 				'<%- textDomain -%>-admin',
-				<%- pkgName -%>_URL . 'assets/js/admin.js',
+				<%- pkgName -%>_URL . 'dist/assets/js/admin.js',
 				array( 'jquery' ),
 				defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : <%- pkgName -%>_VER,
 				true
@@ -244,7 +244,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
  * The main function responsible for returning the one true <%- pkgName %>
  * instance to functions everywhere
  *
- * @since	  1.0.0
+ * @since	  {{VERSION}}
  * @return	  \<%- pkgName -%> The one true <%- pkgName %>
  */
 add_action( 'plugins_loaded', '<%- pkgNameLowerCase -%>_load' );

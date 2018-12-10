@@ -8,11 +8,11 @@ module.exports = function (grunt) {
 
 		pkg: grunt.file.readJSON('package.json'),
 		
-		// Gulp can't do what I need well enough
+		// Making the ZIP with Gulp, even when renaming the ZIP, for some reason will always extract to a directory with the version number appended, which WordPress does not appreciate
 		compress: {
 			main: {
 				options: {
-					archive: '<%- textDomain -%>.zip'
+					archive: './packaged/<%- textDomain -%>.zip'
 				},
 				files: [
 					{expand: true, dot: true, src: ['./<%- textDomain -%>/**/*.*'], dest: './'}
