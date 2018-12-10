@@ -60,7 +60,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 			
 			if ( version_compare( get_bloginfo( 'version' ), '<%- minimumWP -%>' ) < 0 ) {
 				
-				$this->admin_errors[] = sprintf( _x( '%s requires v%s of %s or higher to be installed!', 'Outdated Dependency Error', '<%- textDomain -%>' ), '<strong>' . $this->plugin_data['Name'] . '</strong>', '<%- minimumWP -%>', '<a href="' . admin_url( 'update-core.php' ) . '"><strong>WordPress</strong></a>' );
+				$this->admin_errors[] = sprintf( _x( '%s requires v%s of %sWordPress%s or higher to be installed!', 'First string is the plugin name, followed by the required WordPress version and then the anchor tag for a link to the Update screen.', '<%- textDomain -%>' ), '<strong>' . $this->plugin_data['Name'] . '</strong>', '<%- minimumWP -%>', '<a href="' . admin_url( 'update-core.php' ) . '"><strong>', '</strong></a>' );
 				
 				if ( ! has_action( 'admin_notices', array( $this, 'admin_errors' ) ) ) {
 					add_action( 'admin_notices', array( $this, 'admin_errors' ) );

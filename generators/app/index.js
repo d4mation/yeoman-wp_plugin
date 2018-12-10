@@ -122,6 +122,13 @@ module.exports = class extends Generator {
 
 			}
 		);
+		
+		this.fs.copy(
+			this.templatePath( './config-default.yml' ),
+			this.destinationPath( './config-default.yml' ), {
+
+			}
+		);
 
 		this.fs.copy(
 			this.templatePath( './gulpfile.babel.js' ),
