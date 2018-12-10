@@ -21,7 +21,7 @@ module.exports = class extends Generator {
 				type: 'input',
 				name: 'pkgName',
 				message: 'Package Name?',
-				default: this.appname.replace( ' ', '_' ), // Default to current folder name
+				default: this.appname.replace( /\s/g, '_' ), // Default to current folder name
 			},
 			{
 				type: 'input',
@@ -81,7 +81,7 @@ module.exports = class extends Generator {
 			}
 
 			// Ensure there's no dumb input
-			this.props.pkgName = this.props.pkgName.replace( ' ', '_' );
+			this.props.pkgName = this.props.pkgName.replace( /\s/g, '_' );
 
 			// Used for the Text Domain and File Names
 			this.props.textDomain = this.props.pkgName.toLowerCase().replace( /_/g, '-' ).replace( /\s/g, '-' ).trim();
