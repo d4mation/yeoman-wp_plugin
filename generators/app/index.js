@@ -97,6 +97,9 @@ module.exports = class extends Generator {
 
 			if ( this.props.pluginURI == '' && 
 				this.props.gitHubURL !== '' ) {
+				
+				this.props.gitHubURL = this.props.gitHubURL.replace( /\/$/, '' );
+				
 				this.props.pluginURI = this.props.gitHubURL; // Allow Plugin URL to fallback to GitHub URL
 			}
 
@@ -200,18 +203,6 @@ module.exports = class extends Generator {
 			);
 
 			this.fs.write( this.destinationPath( './package.json' ), packageJson );
-
-			this.fs.extendJSON(
-				this.destinationPath( './bower.json' ),
-				{
-					"repository": {
-						"type": "git",
-						"url": "<%- gitHubURL -%>.git"
-					}
-				},
-				null,
-				'  '
-			);
 
 		}
 
