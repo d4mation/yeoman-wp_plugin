@@ -296,7 +296,7 @@ function releaseCopy() {
   return gulp.src([
 		'!.git/**/*',
         'admin/**/*',
-        'assets/dist/**/*',
+        'dist/assets/**/*',
         'core/**/*',
         'core/library/**/*',
 		'!core/library/rbp-support/{build,build/**}',
