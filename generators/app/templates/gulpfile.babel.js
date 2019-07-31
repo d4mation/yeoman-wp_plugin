@@ -148,9 +148,7 @@ const webpack = {
     return gulp.src(PATHS.entries.js, { allowEmpty: true } )
       .pipe(named())
       .pipe(webpackStream(webpack.config, webpack2))
-      .pipe($.if(PRODUCTION, $.uglify()
-        .on('error', e => { console.log(e); }),
-      ))
+      .pipe($.uglify())
       .pipe($.if(REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev()))
       .pipe(gulp.dest(PATHS.dist + '/assets/js'))
       .pipe($.if(REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest()))
