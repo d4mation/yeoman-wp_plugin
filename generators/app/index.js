@@ -174,7 +174,7 @@ module.exports = class extends Generator {
 		this.fs.copyTpl(
 			this.templatePath( './package.json' ),
 			this.destinationPath( './package.json' ), {
-				pkgName: this.props.pkgName,
+				pkgNameLowerCase: this.props.pkgNameLowerCase,
 			}
 		);
 
