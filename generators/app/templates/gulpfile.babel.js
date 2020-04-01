@@ -233,7 +233,7 @@ gulp.task('build',
 
 // Build the site, run the server, and watch for file changes
 gulp.task('default',
-  gulp.series('build', watch));
+  gulp.series('build', server, watch));
 
 function version() {
 	
@@ -241,7 +241,7 @@ function version() {
         'admin/**/*',
         'assets/src/**/*',
         'core/**/*',
-        '!core/library/**/*',
+        'vendor/**/*',
         'languages/**/*',
         'templates/**/*',
         textDomain + '.php',
@@ -257,6 +257,8 @@ function version() {
 		} ) )
         .pipe(gulp.dest('./'));
 }
+
+gulp.task( 'version', version );
 
 function setProd( done ) {
 	
@@ -337,4 +339,4 @@ function rename( done ) {
 
 // Package task
 gulp.task('package',
-  gulp.series(setProd, version, 'build', generate_pot, releaseCopy, 'release:grunt-compress', rename, releaseCleanup, removeProd, 'build'));
+  gulp.series(setProd, 'version', 'build', generate_pot, releaseCopy, 'release:grunt-compress', rename, releaseCleanup, removeProd, 'build'));
