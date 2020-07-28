@@ -101,12 +101,12 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 
 			if ( ! defined( '<%- pkgName -%>_DIR' ) ) {
 				// Plugin path
-				define( '<%- pkgName -%>_DIR', plugin_dir_path( __FILE__ ) );
+				define( '<%- pkgName -%>_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 			}
 
 			if ( ! defined( '<%- pkgName -%>_URL' ) ) {
 				// Plugin URL
-				define( '<%- pkgName -%>_URL', plugin_dir_url( __FILE__ ) );
+				define( '<%- pkgName -%>_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 			}
 			
 			if ( ! defined( '<%- pkgName -%>_FILE' ) ) {
@@ -126,7 +126,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 		private function load_textdomain() {
 
 			// Set filter for language directory
-			$lang_dir = <%- pkgName -%>_DIR . '/languages/';
+			$lang_dir = trailingslashit( <%- pkgName -%>_DIR ) . 'languages/';
 			$lang_dir = apply_filters( '<%- pkgNameLowerCase -%>_languages_directory', $lang_dir );
 
 			// Traditional WordPress plugin locale filter
@@ -135,7 +135,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 
 			// Setup paths to current locale file
 			$mofile_local   = $lang_dir . $mofile;
-			$mofile_global  = WP_LANG_DIR . '/<%- textDomain -%>/' . $mofile;
+			$mofile_global  = trailingslashit( WP_LANG_DIR ) . '<%- textDomain -%>/' . $mofile;
 
 			if ( file_exists( $mofile_global ) ) {
 				// Look in global /wp-content/languages/<%- textDomain -%>/ folder
@@ -250,7 +250,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
 add_action( 'plugins_loaded', '<%- pkgNameLowerCase -%>_load' );
 function <%- pkgNameLowerCase -%>_load() {
 
-	require_once __DIR__ . '/core/<%- textDomain -%>-functions.php';
+	require_once trailingslashit( __DIR__ ) . 'core/<%- textDomain -%>-functions.php';
 	<%- instanceName -%>();
 
 }
