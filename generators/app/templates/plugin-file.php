@@ -8,6 +8,8 @@
 <% if (author !== '') { %> * Author: <%- author _%><%= "\n" %><% } -%>
 <% if (authorURI !== '') { %> * Author URI: <%- authorURI _%><%= "\n" %><% } -%>
 <% if (contributors !== '') { %> * Contributors: <%- contributors _%><%= "\n" %><% } -%>
+<% if (gitHubURI !== '') { %> * GitHub Plugin URI: <%- gitHubURI _%><%= "\n" %><% } -%>
+<% if (gitHubURI !== '') { %> * GitHub Branch: master<%= "\n" %><% } -%>
  */
 
 // Exit if accessed directly

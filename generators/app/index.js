@@ -67,8 +67,8 @@ module.exports = class extends Generator {
             },
             {
                 type: 'input',
-                name: 'gitHubURL',
-                message: 'GitHub URL? (Optional)',
+                name: 'gitHubURI',
+                message: 'GitHub URI? (Optional)',
                 default: '',
             }
         ] ).then( ( answers ) => {
@@ -95,12 +95,12 @@ module.exports = class extends Generator {
             // The JavaScript Object used in Localized Scripts
             this.props.javaScriptObject = this.props.pkgName.charAt( 0 ).toLowerCase() + this.props.pkgName.slice( 1 ).replace( /[\W|_]/g, '' );
 
+            this.props.gitHubURI = this.props.gitHubURI.replace( /\/$/, '' );
+
             if ( this.props.pluginURI == '' && 
-                this.props.gitHubURL !== '' ) {
+                this.props.gitHubURI !== '' ) {
                 
-                this.props.gitHubURL = this.props.gitHubURL.replace( /\/$/, '' );
-                
-                this.props.pluginURI = this.props.gitHubURL; // Allow Plugin URL to fallback to GitHub URL
+                this.props.pluginURI = this.props.gitHubURI; // Allow Plugin URL to fallback to GitHub URL
             }
 
         } );
@@ -156,7 +156,7 @@ module.exports = class extends Generator {
                 authorURI: this.props.authorURI,
                 contributors: this.props.contributors,
                 minimumWP: this.props.minimumWP,
-                gitHubURL: this.props.gitHubURL,
+                gitHubURI: this.props.gitHubURI,
                 javaScriptObject: this.props.javaScriptObject,
                 pkgNameLowerCase: this.props.pkgNameLowerCase,
                 instanceName: this.props.instanceName,
@@ -178,18 +178,18 @@ module.exports = class extends Generator {
             }
         );
 
-        // If gitHubURL is provided, add to our JSON files, re-run EJS, and overwrite the file in the queue
-        if ( this.props.gitHubURL !== '' ) {
+        // If gitHubURI is provided, add to our JSON files, re-run EJS, and overwrite the file in the queue
+        if ( this.props.gitHubURI !== '' ) {
 
             this.fs.extendJSON(
                 this.destinationPath( './package.json' ),
                 {
                     "repository": {
                         "type": "git",
-                        "url": "<%- gitHubURL -%>.git"
+                        "url": "<%- gitHubURI -%>.git"
                     },
                     "bugs": {
-                        "url": "<%- gitHubURL -%>/issues"
+                        "url": "<%- gitHubURI -%>/issues"
                     }
                 },
                 null,
@@ -199,7 +199,7 @@ module.exports = class extends Generator {
             var packageJson = ejs.render(
                 this.fs.read( this.destinationPath( './package.json' ) ),
                 {
-                    gitHubURL: this.props.gitHubURL,
+                    gitHubURI: this.props.gitHubURI,
                 },
                 extend( 
                     {
