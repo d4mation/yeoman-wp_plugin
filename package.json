@@ -1,14 +1,14 @@
 {
-	"name": "generator-wp_plugin",
-	"version": "1.0.0",
-	"description": "",
-	"files": [
-		"generators"
-	],
-	"keywords": [
-		"yeoman-generator"
-	],
-	"dependencies": {
-		"yeoman-generator": "^1.0.0"
-	}
+    "name": "generator-wp_plugin",
+    "version": "1.0.0",
+    "description": "",
+    "files": [
+        "generators"
+    ],
+    "keywords": [
+        "yeoman-generator"
+    ],
+    "dependencies": {
+        "yeoman-generator": "^1.0.0"
+    }
 }

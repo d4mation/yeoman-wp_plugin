@@ -16,7 +16,7 @@ import colors        from 'ansi-colors';
 import compareVersions from 'compare-versions';
 
 var pkg = JSON.parse( fs.readFileSync( './package.json' ) );
-var textDomain	= pkg.name.toLowerCase().replace( /_/g, '-' ).replace( /\s/g, '-' ).trim();
+var textDomain = pkg.name.toLowerCase().replace( /_/g, '-' ).replace( /\s/g, '-' ).trim();
 
 // Load all Gulp plugins into one variable
 const $ = plugins();
@@ -82,39 +82,39 @@ function copy() {
 // In production, the CSS is compressed
 function sass() {
 
-	return gulp.src( PATHS.entries.scss, { allowEmpty: true } )
-		.pipe( named() )
-		.pipe( $.sourcemaps.init() )
-		.pipe(
-			$.sass( {
-				includePaths: PATHS.sass,
-				outputStyle: 'compressed'
-			} )
-			.on( 'error', $.sass.logError )
-		)
-		.pipe(
-			$.autoprefixer( {
-				browsers: COMPATIBILITY
-			} )
-		)
-		.pipe(
-			$.if( PRODUCTION, $.cleanCss( { compatibility: 'ie9' } ) )
-		)
-		.pipe(
-			$.if( ! PRODUCTION, $.sourcemaps.write() )
-		)
-		.pipe(
-			$.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() )
-		)
-		.pipe(
-			gulp.dest( PATHS.dist + '/assets/css' )
-		)
-		.pipe(
-			$.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest() )
-		)
-		.pipe(
-			gulp.dest( PATHS.dist + '/assets/css' )
-		);
+  return gulp.src( PATHS.entries.scss, { allowEmpty: true } )
+    .pipe( named() )
+    .pipe( $.sourcemaps.init() )
+    .pipe(
+      $.sass( {
+        includePaths: PATHS.sass,
+        outputStyle: 'compressed'
+      } )
+      .on( 'error', $.sass.logError )
+    )
+    .pipe(
+      $.autoprefixer( {
+        browsers: COMPATIBILITY
+      } )
+    )
+    .pipe(
+      $.if( PRODUCTION, $.cleanCss( { compatibility: 'ie9' } ) )
+    )
+    .pipe(
+      $.if( ! PRODUCTION, $.sourcemaps.write() )
+    )
+    .pipe(
+      $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev() )
+    )
+    .pipe(
+      gulp.dest( PATHS.dist + '/assets/css' )
+    )
+    .pipe(
+      $.if( REVISIONING && PRODUCTION || REVISIONING && DEV, $.rev.manifest() )
+    )
+    .pipe(
+      gulp.dest( PATHS.dist + '/assets/css' )
+    );
 
 }
 
@@ -179,13 +179,13 @@ gulp.task('webpack:watch', webpack.watch);
 
 function tinymce() {
 
-	return gulp.src( "src/assets/js/admin/tinymce/**/*.js" )
-		.pipe( $.foreach( function( stream, file ) {
-			return stream
-				.pipe( $.babel() )
-				.pipe( $.uglify() )
-				.pipe( gulp.dest( PATHS.dist + '/assets/js/tinymce' ) )
-		} ) );
+  return gulp.src( "src/assets/js/admin/tinymce/**/*.js" )
+    .pipe( $.foreach( function( stream, file ) {
+      return stream
+        .pipe( $.babel() )
+        .pipe( $.uglify() )
+        .pipe( gulp.dest( PATHS.dist + '/assets/js/tinymce' ) )
+    } ) );
 
 }
 
@@ -236,7 +236,7 @@ gulp.task('default',
   gulp.series('build', server, watch));
 
 function version() {
-	
+  
     return gulp.src([
         'admin/**/*',
         'assets/src/**/*',
@@ -247,33 +247,33 @@ function version() {
         textDomain + '.php',
         'readme.txt'
     ], { base: './', allowEmpty: true } )
-		// Doc block versions, only update on non-Betas and 1.0.0+ releases
+    // Doc block versions, only update on non-Betas and 1.0.0+ releases
         .pipe( $.if( ( pkg.version.indexOf( 'b' ) == -1 && compareVersions( pkg.version, '1.0.0' ) !== -1 ), $.replace( /\{\{VERSION}}/g, pkg.version ) ) )
         // Plugin header
         .pipe($.replace(/(\* Version: ).*/, "$1" + pkg.version))
         // readme.txt
-		.pipe( $.replace( /(Stable tag: ).*/, function( match, captureGroup, offset, file ) {
-			return captureGroup + pkg.version; // This really shouldn't be necessary, but it wouldn't work otherwise
-		} ) )
+    .pipe( $.replace( /(Stable tag: ).*/, function( match, captureGroup, offset, file ) {
+      return captureGroup + pkg.version; // This really shouldn't be necessary, but it wouldn't work otherwise
+    } ) )
         .pipe(gulp.dest('./'));
 }
 
 gulp.task( 'version', version );
 
 function setProd( done ) {
-	
-	PRODUCTION = true;
-	
-	done();
-	
+  
+  PRODUCTION = true;
+  
+  done();
+  
 }
 
 function removeProd( done ) {
-	
-	PRODUCTION = false;
-	
-	done();
-	
+  
+  PRODUCTION = false;
+  
+  done();
+  
 }
 
 function generate_pot() {
@@ -287,54 +287,54 @@ function generate_pot() {
 }
 
 require( 'gulp-grunt' )( gulp, {
-	prefix: 'release:grunt-',
+  prefix: 'release:grunt-',
 } ); // add all the gruntfile tasks to gulp
 
 // Copy relevant files to another directory
 function releaseCopy() {
 
   return gulp.src([
-		'!.git/**/*',
+    '!.git/**/*',
         'admin/**/*',
         'dist/assets/**/*',
         'core/**/*',
         'core/library/**/*',
-		'!core/library/rbp-support/{build,build/**}',
-		'!core/library/rbp-support/{gulp,gulp/**}',
-		'!core/library/rbp-support/{node_modules,node_modules/**}',
-		'!core/library/rbp-support/**/*.zip',
-		'!core/library/rbm-field-helpers/{bin,bin/**}',
-		'!core/library/rbm-field-helpers/{node_modules,node_modules/**}',
-		'!core/library/rbm-field-helpers/**/*.zip',
+    '!core/library/rbp-support/{build,build/**}',
+    '!core/library/rbp-support/{gulp,gulp/**}',
+    '!core/library/rbp-support/{node_modules,node_modules/**}',
+    '!core/library/rbp-support/**/*.zip',
+    '!core/library/rbm-field-helpers/{bin,bin/**}',
+    '!core/library/rbm-field-helpers/{node_modules,node_modules/**}',
+    '!core/library/rbm-field-helpers/**/*.zip',
         'languages/**/*',
         'templates/**/*',
         textDomain + '.php',
         'readme.txt',
-		'!./**/package.json',
-		'!./**/package-lock.json',
-		'!./**/config.yml',
-		'!./**/webpack.config.js',
-		'!./**/gulpfile.js',
-		'!./**/gulpfile.babel.js',
-		'!./**/gruntfile.js',
-		'!./**/README.md'
+    '!./**/package.json',
+    '!./**/package-lock.json',
+    '!./**/config.yml',
+    '!./**/webpack.config.js',
+    '!./**/gulpfile.js',
+    '!./**/gulpfile.babel.js',
+    '!./**/gruntfile.js',
+    '!./**/README.md'
     ], { base: './', allowEmpty: true } )
     .pipe(gulp.dest( textDomain ));
 }
 
 function releaseCleanup() {
-	
-	return gulp.src( './' + textDomain, { read: false } )
-		.pipe( $.clean() )
-	
+  
+  return gulp.src( './' + textDomain, { read: false } )
+    .pipe( $.clean() )
+  
 }
 
 function rename( done ) {
-	
-	fs.renameSync( './packaged/' + textDomain + '.zip', './packaged/' + textDomain + '-' + pkg.version + '.zip' );
-	
-	done();
-	
+  
+  fs.renameSync( './packaged/' + textDomain + '.zip', './packaged/' + textDomain + '-' + pkg.version + '.zip' );
+  
+  done();
+  
 }
 
 // Package task

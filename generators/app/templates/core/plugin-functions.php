@@ -2,22 +2,22 @@
 /**
  * Provides helper functions.
  *
- * @since	  {{VERSION}}
+ * @since   {{VERSION}}
  *
- * @package	<%- pkgName %>
+ * @package <%- pkgName %>
  * @subpackage <%- pkgName -%>/core
  */
 if ( ! defined( 'ABSPATH' ) ) {
-	die;
+    die;
 }
 
 /**
  * Returns the main plugin object
  *
- * @since		{{VERSION}}
+ * @since   {{VERSION}}
  *
- * @return		<%- pkgName %>
+ * @return  <%- pkgName %>
  */
 function <%- instanceName -%>() {
-	return <%- pkgName -%>::instance();
+    return <%- pkgName -%>::instance();
 }
