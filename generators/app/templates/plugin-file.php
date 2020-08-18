@@ -34,7 +34,7 @@ if ( ! class_exists( '<%- pkgName -%>' ) ) {
          * @var          array $admin_errors Stores all our Admin Errors to fire at once
          * @since        {{VERSION}}
          */
-        private $admin_errors;
+        private $admin_errors = array();
 
         /**
          * Get active instance
