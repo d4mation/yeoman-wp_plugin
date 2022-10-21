@@ -29,6 +29,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
     "gulp-rev": "^8.0.0",
+    "gulp-rtlcss": "^2.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-sort": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
